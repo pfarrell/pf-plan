@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+kebab () {
+  echo $(echo "$1" | sed -r -e 's/\s+/-/g' -e 's/([a-z0-9])([A-Z])/\1-\2/g' -e "s/[']//g" | tr '[:upper:]' '[:lower:]')
+}
+
+# create site dir if non-existent
+mkdir -p site
+
+date=$(date "+%Y-%m-%d")
+
+title="PatF .plan $date"
+kebab="$date-patf-plan"
+file="site/$kebab.yml"
+
+if [ ! -f "$file" ]; then
+  # write new file
+  python bin/new_dotplan.py "$file" "$kebab" "$title"
+  git add "$file"
+  git commit -m "new dotfile for $date"
+fi
+
+vi "$file"
+

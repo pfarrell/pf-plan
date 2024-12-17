@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+kebab () {
+  echo $(echo "$1" | sed -r -e 's/[[:space:]]+/-/g' -e 's/([a-z0-9])([A-Z])/\1-\2/g' -e "s/[']//g" | tr '[:upper:]' '[:lower:]')
+}
+
+# create site dir if non-existent
+mkdir -p site
+
+# prompt for title
+echo What should we call this post?
+read title
+
+kebab=$(kebab "$title")
+date=$(date '+%Y-%m-%d')
+file="site/$date-$kebab.yml"
+
+if [ ! -f "$file" ]; then
+  # write new file
+  python bin/new_post.py "$file" "$kebab" "$title"
+  git add "$file"
+fi
+
+vi "$file"

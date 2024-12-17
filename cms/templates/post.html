@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block head %}
+    {{ super() }}
+    <style type="text/css">
+    </style>
+{% endblock %}
+{% block content %}
+    {% if title|length > 25 %}
+      {% set titleClass = 'shrunk' %}
+    {% else %}
+      {% set titleClass = 'full' %}
+    {% endif %}
+    <div class="content {{titleClass}}">
+      <div class="banner">
+        <h1>{{ title }}</h1>
+        {% if headerImage %}
+        <img class="headerImage" src="{{ headerImage }}" />
+        {% endif %}
+        {% if projectLink %}
+        <a class="btn-default  projectLink" href="{{ projectLink }}">See it In Action!</a>
+        {% endif %}
+      </div>
+      <hr />
+      <div class="important">
+      {% markdown %}
+        {{ content|safe }}
+      {% endmarkdown %}
+      <hr>
+      <div class="bottom">
+        <p class="article-date">posted {{ date }}</p>
+      </div>
+      </div>
+    </div>
+{% endblock %}
+
+

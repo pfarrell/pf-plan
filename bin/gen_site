@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+mkdir -p dist
+
+python bin/gen_site.py $1 dev

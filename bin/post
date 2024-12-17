@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+pushd .
+
+cd ~/proj/pf-plan
+
+while getopts "?hp:" opt; do
+  case ${opt} in
+    h )
+      echo "Usage: post [-h] [-p <commit message>]" >&2
+      echo
+      exit 0
+      ;;
+    p )
+      if [ -z "$OPTARG" ]; then
+        echo "Option -$opt requires an argument to be used as the commit comment." >&2
+        exit 1
+      fi
+      echo "Pushing changes to remote repository" >&2
+      git add site
+      git commit -m "$OPTARG"
+      git push
+      popd
+      exit 0
+      ;;
+    \? )
+      echo "Invalid option: -$OPTARG" 1>&2
+      exit 1
+      ;;
+  esac
+done
+
+source .venv/bin/activate
+make post
+deactivate
+popd

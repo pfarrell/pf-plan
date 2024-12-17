@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+set -x
+
+pushd .
+
+cd ~/proj/pf-plan
+
+while getopts "?hpo" opt; do
+  case ${opt} in
+    h )
+      echo "Usage: dotplan [-h] [-p]" >&2
+      echo
+      exit 0
+      ;;
+    p )
+      echo "Pushing changes to remote repository" >&2
+      git add site
+      git commit -m 'plan updated'
+      git push
+      popd
+      exit 0
+      ;;
+    o )
+      source .venv/bin/activate
+      make open
+      deactivate
+      popd
+      exit 0
+      ;;
+    \? )
+      echo "Invalid option: -$OPTARG" 1>&2
+      exit 1
+      ;;
+  esac
+done
+
+source .venv/bin/activate
+make dotplan
+git add site
+git commit -m 'plan updated'
+#git push
+deactivate
+popd
