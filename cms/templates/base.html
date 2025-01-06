@@ -8,19 +8,85 @@
     <title>Notes</title>
     <style>
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     {% endblock %}
 </head>
 <body>
     <div class="container">
-    <div class="nav">
+    <nav class="nav">
       <ul>
         <li><a class="btn-default" href="index.html">Home</a></li>
+        <li>
+          <button id="toggleBtn" class="btn-default pull-right">
+            <i id="icon" class="fas fa-th-large"></i>
+            <div id="btnText"></div>
+          </button>
+        </li>
       </ul>
     </nav>
-    </div>
     {% block content %}{% endblock %}
     <div id="footer" class="center">
-        &copy;2022 by <a href="http://patf.net/">patf.net</a>.
+        &copy;2025 by <a href="http://patf.net/">patf.net</a>.
     </div>
 </body>
+<script>
+          function setCookie(name, value, days) {
+              const d = new Date();
+              d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+              document.cookie = `${name}=${value}; expires=${d.toUTCString()}; path=/`;
+          }
+
+          function getCookie(name) {
+              const cookies = document.cookie.split(';');
+              for (let i = 0; i < cookies.length; i++) {
+                  const c = cookies[i].trim();
+                  if (c.indexOf(name + "=") === 0) {
+                      return c.substring(name.length + 1);
+                  }
+              }
+              return "";
+          }
+
+          // Toggle view mode and save it in a cookie
+          function toggleView() {
+              const mainGrid = document.getElementById('mainGrid');
+              const isGridView = mainGrid.classList.contains('grid');
+              const icond=document.getElementById('icon');
+
+              if (isGridView) {
+                  mainGrid.classList.remove('grid');
+                  mainGrid.classList.add('list-view');
+                  setCookie('viewMode', 'list', 7); // Save list view in cookie for 7 days
+                  icon.className="fas fa-th-large";
+              } else {
+                  mainGrid.classList.remove('list-view');
+                  mainGrid.classList.add('grid');
+                  setCookie('viewMode', 'grid', 7); // Save grid view in cookie for 7 days
+                  icon.className="fas fa-list";
+              }
+          }
+
+          // Load the view mode from the cookie
+          function loadViewMode() {
+              const viewMode = getCookie('viewMode');
+              const mainGrid = document.getElementById('mainGrid');
+              const btnText= document.getElementById('toggleBtn');
+              const icon = document.getElementById('icon');
+
+              if (viewMode === 'list') {
+                  mainGrid.classList.remove('grid');
+                  mainGrid.classList.add('list-view');
+                  icon.className="fas fa-th-large";
+              } else {
+                  mainGrid.classList.remove('list-view');
+                  mainGrid.classList.add('grid');
+                  icon.className="fas fa-list";
+              }
+          }
+
+          document.getElementById('toggleBtn').addEventListener('click', toggleView);
+
+          // Load view mode on page load
+          window.onload = loadViewMode;
+</script>
 </html>

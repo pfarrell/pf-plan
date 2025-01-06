@@ -4,19 +4,19 @@
     <h1>Notes
     </h1>
   </div>
-  <main class="grid">
+  <main id="mainGrid" class="list-view">
   {% for post in posts %}
   <article class="">
     <img src="{{ post.image }}" />
     <div class="text">
       <h3>{{ post.title }}</h3>
-      <p class="summary">
+      <div class="summary">
         {{ post.summary }}
-      </p>
+      </div>
       <div class="links">
-        <p><a class="btn-default" href="{{ post.date }}-{{ post.kebab}}.html">Read More</a><p>
+        <div><a class="btn-default" href="{{ post.date }}-{{ post.kebab}}.html">Read More</a></div>
         {% if 'projectLink' in post %}
-        <p><a class="btn-default" href="{{ post.projectLink }}" target="_">See it In Action!</a><p>
+        <div><a class="btn-default" href="{{ post.projectLink }}" target="_">See it In Action!</a></div>
         {% endif %}
       </div>
     </div>
@@ -24,5 +24,7 @@
   {% endfor %}
   </main>
 {% endblock %}
+
+
 
 
