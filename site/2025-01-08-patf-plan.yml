@@ -5,4 +5,13 @@ kebab: 2025-01-08-patf-plan
 title: 2025-01-08 .plan
 ---
 
-None
+## Finished
+
+* new repo for chatgpt assembled music player to replace jplayer
+* bug fixes on bemused
+* update new list view for dotplan
+
+## Todo
+
+* update bemused to use new music player and get it deployed
+* plan for on consolidation of pflog and dotplan
