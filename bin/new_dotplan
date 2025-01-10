@@ -9,7 +9,7 @@ mkdir -p site
 
 date=$(date "+%Y-%m-%d")
 
-title="PatF .plan $date"
+title="$date .plan"
 kebab="$date-patf-plan"
 file="site/$kebab.yml"
 
