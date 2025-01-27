@@ -1,56 +1,61 @@
 #!/usr/bin/env bash
 
 kebab () {
-  echo $(echo "$1" | sed -r -e 's/[[:space:]]+/-/g' -e 's/([a-z0-9])([A-Z])/\1-\2/g' -e "s/[']//g" | tr '[:upper:]' '[:lower:]')
+    echo $(echo "$1" | sed -r -e 's/[[:space:]]+/-/g' -e 's/([a-z0-9])([A-Z])/\1-\2/g' -e "s/[']//g" | tr '[:upper:]' '[:lower:]')
 }
 
 # create site dir if non-existent
 mkdir -p site
 
-echo Edit existing post?
+# prompt for edit or new post
+echo "Edit existing post? (y/n)"
 read choice
 
-if [ "$choice" = "edit" ]; then
-  
-  echo "Available posts:"
-  posts=(site/posts/drafts/*)
-  if [ ${#posts[@]} -eq 0 ]; then
-      echo "No existing posts found in site/posts/drafts/"
-      exit 1
-  fi
+if [[ "$choice" =~ ^[Yy][Ee]?[Ss]?$ ]]
+then
+    # list existing posts and let user select one
+    echo "Available posts:"
+    posts=(site/posts/drafts/*)
+    if [ ${#posts[@]} -eq 0 ]
+    then
+        echo "No existing posts found in site/posts/drafts/"
+        exit 1
+    fi
+    
     # display posts with numbers
-    for i in "${!posts[@]}"; do
+    for i in "${!posts[@]}"
+    do
         echo "$((i+1)): $(basename "${posts[$i]}")"
     done
-
+    
     # get user selection
     echo "Enter the number of the post you want to edit:"
     read selection
-
+    
     # validate selection
-    if [[ ! "$selection" =~ ^[0-9]+$ ]] || [ "$selection" -lt 1 ] || [ "$selection" -gt ${#posts[@]} ]; then
+    if [[ ! "$selection" =~ ^[0-9]+$ ]] || [ "$selection" -lt 1 ] || [ "$selection" -gt ${#posts[@]} ]
+    then
         echo "Invalid selection"
         exit 1
     fi
-
+    
     # set file variable to selected post
     file="${posts[$((selection-1))]}"
 else
-  # prompt for title
-  echo What should we call this post?
-  read title
-
-  kebab=$(kebab "$title")
-  date=$(date '+%Y-%m-%d')
-  file="site/$date-$kebab.yml"
-
-  if [ ! -f "$file" ]; then
-    # write new file
-    python bin/new_post.py "$file" "$kebab" "$title"
-    git add "$file"
-  fi
+    # original new post creation logic
+    echo "What should we call this post?"
+    read title
+    kebab=$(kebab "$title")
+    date=$(date '+%Y-%m-%d')
+    file="site/$date-$kebab.yml"
+    
+    if [ ! -f "$file" ]
+    then
+        # write new file
+        python bin/new_post.py "$file" "$kebab" "$title"
+        git add "$file"
+    fi
 fi
 
+# open file in vi
 vi "$file"
-git add "$file"
-git commit -m 'updated post'
