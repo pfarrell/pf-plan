@@ -85,7 +85,7 @@ if __name__ == "__main__":
     rootdir = sys.argv[1]
     mode = sys.argv[2]
     if(mode == 'dev'):
-        render_site(rootdir, ['site'])
+        render_site(rootdir, ['site/plans', 'site/posts/drafts', 'site/posts/published'])
     else:
-        render_site(rootdir, ['site'])
+        render_site(rootdir, ['site/plans', 'site/posts/drafts', 'site/posts/published'])
 

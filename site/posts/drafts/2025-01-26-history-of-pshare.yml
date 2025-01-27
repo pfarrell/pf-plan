@@ -1,0 +1,39 @@
+---
+date: '2025-01-26'
+headerImage: null
+id: 1737942225
+image: update me
+kebab: history-of-pshare
+projectLink: null
+summary: Write a summary
+title: History of PShare
+---
+
+Eras
+
+2000: First MP3 I still have
+
+2003: First iPod and a Download Site
+
+2004: FTP Upload
+
+2005: Save PShare
+
+2006: The Dan Archive
+
+2009: Streaming Flash Player with TSPlayer
+[Secure TSPlayer](https://web.archive.org/web/20140702030636/http://www.tsplayer.com/our-products)
+
+2010: Expansion of library with Jeff 
+
+2014: Ruby Rewrite
+[Jun 9, 2014](https://github.com/pfarrell/bemused/commit/211ee7dca6331b9df1c279d68885c57dc8a7119e)
+
+2016: HTML5 Rewrite with JPlayer and rename to Bemused
+unpopular renaming
+
+2017: Who needs MP3s anymore?
+
+2025: Custom Music Player written with AI
+
+Future: Combine bemused and pho and file store to create one stop media organizer 
